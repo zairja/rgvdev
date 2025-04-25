@@ -14,7 +14,6 @@
       font-family: Arial, sans-serif;
     }
     #calendar {
-      max-width: 900px;
       margin: 0 auto;
     }
   </style>
@@ -31,7 +30,8 @@
 
       const calendar = new FullCalendar.Calendar(calendarEl, {	
         initialView: 'timeGridWeek',
-		headerToolbar: { center: 'dayGridMonth,timeGridWeek,timeGridDay' },
+		aspectRatio: .5,
+		headerToolbar: { center: 'dayGridMonth,timeGridWeek,timeGridDay', start: 'today', end: 'prev,next' },
         events: [
           { title: 'Lowe\'s Shift 1', startTime: '08:00', endTime: '13:00', editable: true, backgroundColor: 'green', daysOfWeek: [5], groupId: 1 },
 		  { title: 'Lowe\'s Shift 2', startTime: '08:00', endTime: '17:00', editable: true, backgroundColor: 'green', daysOfWeek: [6], groupId: 2},
@@ -47,7 +47,12 @@
 			timeGridDay: {
 			  type: 'timeGrid',
 			  allDaySlot: false
-			}
+			},
+			timeGridWeek: {
+				type: 'dayGrid',
+			  allDaySlot: false,
+			  expandRows: true
+		  }
 		}		
       });
 
