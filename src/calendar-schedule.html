@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FullCalendar Example</title>
+  <title>Cool Schedule</title>
   
-  <!-- FullCalendar CSS -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
 
   <style>
@@ -24,7 +23,6 @@
 
   <div id="calendar"></div>
 
-  <!-- FullCalendar JS -->
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
 
   <script>
@@ -32,13 +30,25 @@
       const calendarEl = document.getElementById('calendar');
 
       const calendar = new FullCalendar.Calendar(calendarEl, {	
-        initialView: 'timeGridDay',
+        initialView: 'timeGridWeek',
 		headerToolbar: { center: 'dayGridMonth,timeGridWeek,timeGridDay' },
         events: [
-          { title: 'Lowe\'s', start: '2025-04-25T16:56:09+0000', end: '2025-04-25T22:56:09+0000', editable: true, backgroundColor: 'green' },
-          { title: 'Walmart', start: '2025-04-25T16:56:09+0000', end: '2025-04-25T22:56:09+0000', editable: true, backgroundColor: 'blue' },
-		  { title: 'Nine Tails', start: '2025-04-25T16:56:09+0000', end: '2025-04-25T22:56:09+0000', editable: true, backgroundColor: 'orange' }
-        ]
+          { title: 'Lowe\'s Shift 1', startTime: '08:00', endTime: '13:00', editable: true, backgroundColor: 'green', daysOfWeek: [5], groupId: 1 },
+		  { title: 'Lowe\'s Shift 2', startTime: '08:00', endTime: '17:00', editable: true, backgroundColor: 'green', daysOfWeek: [6], groupId: 2},
+		  { title: 'Lowe\'s Shift 3', startTime: '08:00', endTime: '15:00', editable: true, backgroundColor: 'green', daysOfWeek: [0], groupId: 3 },
+		  
+		  { title: 'Walmart Shift 1', startTime: '22:00', endTime: '31:00', editable: true, backgroundColor: 'blue', daysOfWeek: [0], groupId: 4 },
+		  { title: 'Walmart Shift 2', startTime: '22:00', endTime: '31:00', editable: true, backgroundColor: 'blue', daysOfWeek: [1], groupId: 5 },
+		  { title: 'Walmart Shift 3', startTime: '22:00', endTime: '31:00', editable: true, backgroundColor: 'blue', daysOfWeek: [2], groupId: 6 },
+		  
+		  { title: '9Tails Shift A', startTime: '18:00', endTime: '25:00', editable: true, backgroundColor: 'orange', daysOfWeek: [0,6], groupId: 7 }
+        ],
+		 views: {
+			timeGridDay: {
+			  type: 'timeGrid',
+			  allDaySlot: false
+			}
+		}		
       });
 
       calendar.render();
