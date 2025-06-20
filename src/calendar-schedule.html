@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cool Schedule</title>
-  
+  <title>Cool Genesystem Scheduler</title>
+
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+  <link href="micromodal.css" rel="stylesheet" />
 
   <style>
     body {
@@ -13,51 +15,177 @@
       padding: 0;
       font-family: Arial, sans-serif;
     }
+
     #calendar {
       margin: 0 auto;
     }
+
+    #actions {
+      margin: 1.5em;
+    }
+
+    .cb-label {
+      display: block;
+      margin-bottom: 2px;
+    }
   </style>
 </head>
+
 <body>
 
   <div id="calendar"></div>
 
+  <div class="fc fc-theme-standard">
+    <div id="actions" class="fc-button-group">
+      <button id="btnNewSchedule" type="button" class="fc-button fc-button-primary">
+        New Schedule
+      </button>
+    </div>
+  </div>
+
+
+  <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+        <header class="modal__header">
+          <h2 class="modal__title" id="modal-1-title">
+            New Schedule
+          </h2>
+          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+        </header>
+        <main class="modal__content" id="modal-1-content">
+          <form id="newScheduleForm">
+            <label for="scheduleName">Schedule Name</label>
+            <input id="scheduleName" type="text"><br>
+            <label for="startTime">Start Time</label>
+            <input id="startTime" type="time"><br>
+            <label for="endTime">End Time</span></label>
+            <input id="endTime" type="time"><br>
+            <label for="scheduleColor">Color</label>
+            <input id="scheduleColor" type="color">
+            <label class="cb-label"><input type="checkbox" name="days" value="Monday"> Monday</label>
+            <label class="cb-label"><input type="checkbox" name="days" value="Tuesday"> Tuesday</label>
+            <label class="cb-label"><input type="checkbox" name="days" value="Wednesday"> Wednesday</label>
+            <label class="cb-label"><input type="checkbox" name="days" value="Thursday"> Thursday</label>
+            <label class="cb-label"><input type="checkbox" name="days" value="Friday"> Friday</label>
+            <label class="cb-label"><input type="checkbox" name="days" value="Saturday"> Saturday</label>
+            <label class="cb-label"><input type="checkbox" name="days" value="Sunday"> Sunday</label>
+            <br>
+            <!-- <label class="cb-label"><input id="isRecurring"  type="checkbox" >Recurring</span></label> 	 -->
+          </form>
+        </main>
+        <footer class="modal__footer">
+          <button id="btnAddSchedule" class="modal__btn modal__btn-primary">Add Schedule</button>
+          <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Cancel</button>
+        </footer>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
+  <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
 
   <script>
+
+    let calendar;
+
     document.addEventListener('DOMContentLoaded', function () {
       const calendarEl = document.getElementById('calendar');
 
-      const calendar = new FullCalendar.Calendar(calendarEl, {	
+      calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'timeGridWeek',
-		aspectRatio: .5,
-		headerToolbar: { center: 'dayGridMonth,timeGridWeek,timeGridDay', start: 'today', end: 'prev,next' },
+        aspectRatio: .6,
+        headerToolbar: { center: 'dayGridMonth,timeGridWeek,timeGridDay', start: 'today', end: 'prev,next' },
         events: [
-          { title: 'Lowe\'s Shift 1', startTime: '08:00', endTime: '13:00', editable: true, backgroundColor: 'green', daysOfWeek: [5], groupId: 1 },
-		  { title: 'Lowe\'s Shift 2', startTime: '08:00', endTime: '17:00', editable: true, backgroundColor: 'green', daysOfWeek: [6], groupId: 2},
-		  { title: 'Lowe\'s Shift 3', startTime: '08:00', endTime: '15:00', editable: true, backgroundColor: 'green', daysOfWeek: [0], groupId: 3 },
-		  
-		  { title: 'Walmart Shift 1', startTime: '22:00', endTime: '31:00', editable: true, backgroundColor: 'blue', daysOfWeek: [0], groupId: 4 },
-		  { title: 'Walmart Shift 2', startTime: '22:00', endTime: '31:00', editable: true, backgroundColor: 'blue', daysOfWeek: [1], groupId: 5 },
-		  { title: 'Walmart Shift 3', startTime: '22:00', endTime: '31:00', editable: true, backgroundColor: 'blue', daysOfWeek: [2], groupId: 6 },
-		  
-		  { title: '9Tails Shift A', startTime: '18:00', endTime: '25:00', editable: true, backgroundColor: 'orange', daysOfWeek: [0,6], groupId: 7 }
+          { title: 'Jamal\'s Shift 1', startTime: '08:00', endTime: '13:00', editable: true, backgroundColor: 'green', daysOfWeek: [5], groupId: 1 },
+          { title: 'Jamal\'s Shift 2', startTime: '08:00', endTime: '17:00', editable: true, backgroundColor: 'green', daysOfWeek: [6], groupId: 2 },
+          { title: 'Jamal\'s Shift 3', startTime: '08:00', endTime: '15:00', editable: true, backgroundColor: 'green', daysOfWeek: [0], groupId: 3 },
+
+          { title: 'Wally World Shift 1', startTime: '22:00', endTime: '31:00', editable: true, backgroundColor: 'blue', daysOfWeek: [0], groupId: 4 },
+          { title: 'Wally World Shift 2', startTime: '22:00', endTime: '31:00', editable: true, backgroundColor: 'blue', daysOfWeek: [1], groupId: 5 },
+          { title: 'Wally World Shift 3', startTime: '22:00', endTime: '31:00', editable: true, backgroundColor: 'blue', daysOfWeek: [2], groupId: 6 },
+
+          { title: 'Night Shift', startTime: '18:00', endTime: '25:00', editable: true, backgroundColor: 'orange', daysOfWeek: [0, 6], groupId: 7 }
         ],
-		 views: {
-			timeGridDay: {
-			  type: 'timeGrid',
-			  allDaySlot: false
-			},
-			timeGridWeek: {
-				type: 'dayGrid',
-			  allDaySlot: false,
-			  expandRows: true
-		  }
-		}		
+        views: {
+          timeGridDay: {
+            type: 'timeGrid',
+            allDaySlot: false
+          },
+          timeGridWeek: {
+            type: 'dayGrid',
+            allDaySlot: false,
+            expandRows: true
+          }
+        }
       });
 
       calendar.render();
+      localStorage.clear();
     });
+
+
+    const btnAddSchedule = document.getElementById('btnAddSchedule');
+    const btnNewSchedule = document.getElementById('btnNewSchedule');
+
+    function getEventCount() {
+      if (localStorage.getItem("eventCount") !== null) {
+        return parseInt(localStorage.getItem("eventCount"));
+      }
+      localStorage.setItem("eventCount", "0");
+      return 0;
+    }
+
+    function addScheduleToCalendar() {
+      const title = document.getElementById('scheduleName').value.trim();
+      const startTime = document.getElementById('startTime').value;
+      const endTime = document.getElementById('endTime').value;
+      const backgroundColor = document.getElementById('scheduleColor').value;
+
+      // Get checked days as numbers (0 = Sunday, 6 = Saturday)
+      const dayMap = {
+        Sunday: 0, Monday: 1, Tuesday: 2, Wednesday: 3,
+        Thursday: 4, Friday: 5, Saturday: 6
+      };
+
+      const daysOfWeek = Array.from(document.querySelectorAll('input[name="days"]:checked'))
+        .map(cb => dayMap[cb.value]);
+
+      if (!title || !startTime || !endTime || daysOfWeek.length === 0) {
+        <!-- result.textContent = 'Please complete all required fields.'; -->
+        return;
+      }
+
+      // Optional: generate unique group ID
+      const groupId = Date.now();
+
+      calendar.addEvent({
+        title,
+        startTime,
+        endTime,
+        daysOfWeek,
+        backgroundColor,
+        editable: true,
+        groupId
+      });
+
+      //result.textContent = `Event "${title}" added successfully.`;
+      setStorage();
+      document.getElementById('newScheduleForm').reset();
+      MicroModal.close('modal-1');
+    }
+
+    function setStorage() {
+      let eventCount = parseInt(getEventCount());
+      localStorage.setItem("event" + eventCount, "eventData");
+
+      eventCount += 1;
+      localStorage.setItem("eventCount", eventCount);
+    }
+
+    btnNewSchedule.addEventListener('click', () => MicroModal.show('modal-1'));
+    btnAddSchedule.addEventListener('click', addScheduleToCalendar);
   </script>
 </body>
+
 </html>
